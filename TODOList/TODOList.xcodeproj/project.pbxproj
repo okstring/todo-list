@@ -20,8 +20,8 @@
 		B3532088261D55B100EA788D /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3532087261D55B100EA788D /* Timeline.swift */; };
 		B353208C261D55C900EA788D /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = B353208B261D55C900EA788D /* Feed.swift */; };
 		B35B4427261D73D500FD5E83 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B4426261D73D500FD5E83 /* Networking.swift */; };
-		B35B442A261D78DA00FD5E83 /* DecodingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B4429261D78DA00FD5E83 /* DecodingManager.swift */; };
-		B35B442F261D834E00FD5E83 /* EncodingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B442E261D834E00FD5E83 /* EncodingManager.swift */; };
+		B35B442A261D78DA00FD5E83 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B4429261D78DA00FD5E83 /* DataManager.swift */; };
+		B35B4435261D969C00FD5E83 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B4434261D969C00FD5E83 /* SessionManager.swift */; };
 		B3F4ACC3261C3AD700D04B00 /* ToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F4ACC2261C3AD700D04B00 /* ToDoList.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,8 +41,8 @@
 		B3532087261D55B100EA788D /* Timeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		B353208B261D55C900EA788D /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		B35B4426261D73D500FD5E83 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		B35B4429261D78DA00FD5E83 /* DecodingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingManager.swift; sourceTree = "<group>"; };
-		B35B442E261D834E00FD5E83 /* EncodingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingManager.swift; sourceTree = "<group>"; };
+		B35B4429261D78DA00FD5E83 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		B35B4434261D969C00FD5E83 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		B3F4ACC2261C3AD700D04B00 /* ToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,7 +80,7 @@
 				22560CDE261C310F00E2B80D /* SceneDelegate.swift */,
 				22560CE0261C310F00E2B80D /* ViewController.swift */,
 				22560CE2261C310F00E2B80D /* Main.storyboard */,
-				B35B4425261D73B700FD5E83 /* Network */,
+				B35B4425261D73B700FD5E83 /* Data */,
 				B3F4ACC1261C3ABB00D04B00 /* Domain */,
 				22560CE5261C311400E2B80D /* Assets.xcassets */,
 				22560CE7261C311400E2B80D /* LaunchScreen.storyboard */,
@@ -89,14 +89,14 @@
 			path = TODOList;
 			sourceTree = "<group>";
 		};
-		B35B4425261D73B700FD5E83 /* Network */ = {
+		B35B4425261D73B700FD5E83 /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				B35B4426261D73D500FD5E83 /* Networking.swift */,
-				B35B4429261D78DA00FD5E83 /* DecodingManager.swift */,
-				B35B442E261D834E00FD5E83 /* EncodingManager.swift */,
+				B35B4434261D969C00FD5E83 /* SessionManager.swift */,
+				B35B4429261D78DA00FD5E83 /* DataManager.swift */,
 			);
-			path = Network;
+			path = Data;
 			sourceTree = "<group>";
 		};
 		B3F4ACC1261C3ABB00D04B00 /* Domain */ = {
@@ -185,17 +185,17 @@
 			files = (
 				22560CE1261C310F00E2B80D /* ViewController.swift in Sources */,
 				B35B4427261D73D500FD5E83 /* Networking.swift in Sources */,
-				B35B442A261D78DA00FD5E83 /* DecodingManager.swift in Sources */,
+				B35B442A261D78DA00FD5E83 /* DataManager.swift in Sources */,
 				B353208C261D55C900EA788D /* Feed.swift in Sources */,
 				B353207E261D489900EA788D /* Card.swift in Sources */,
 				B353207B261D487C00EA788D /* ToDo.swift in Sources */,
 				B3532085261D559100EA788D /* Done.swift in Sources */,
 				B3532081261D549600EA788D /* Doing.swift in Sources */,
-				B35B442F261D834E00FD5E83 /* EncodingManager.swift in Sources */,
 				22560CDD261C310F00E2B80D /* AppDelegate.swift in Sources */,
 				22560CDF261C310F00E2B80D /* SceneDelegate.swift in Sources */,
 				B3532088261D55B100EA788D /* Timeline.swift in Sources */,
 				B3F4ACC3261C3AD700D04B00 /* ToDoList.swift in Sources */,
+				B35B4435261D969C00FD5E83 /* SessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
