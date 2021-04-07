@@ -8,5 +8,14 @@
 import Foundation
 
 class Timeline {
-    var feeds: []
+    var feeds: [Feed]
+    
+    init() {
+        feeds = []
+    }
+    
+    func add(title: String, timeStamp: Date, actionState: ActionState) {
+        let feed = Feed(cardTitle: title, timeStamp: timeStamp, actionState: actionState)
+        self.feeds.append(feed)
+    }
 }
