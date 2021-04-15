@@ -8,14 +8,15 @@
 import Foundation
 
 //MARK: - POST
-struct CardForPost {
+class CardForPost: NSObject, Codable {
     var title: String
     var contents: String
-    var columnId: Int
+    var columnType: Int
     
-    enum CodingKeys: String, CodingKey {
-        case title
-        case contents
-        case columnId = "column_id"
+    init(title: String, contents: String, columnType: Int) {
+        self.title = title
+        self.contents = contents
+        self.columnType = columnType
     }
+    
 }

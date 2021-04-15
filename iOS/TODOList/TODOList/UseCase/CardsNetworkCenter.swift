@@ -9,7 +9,7 @@ import Foundation
 
 protocol NetworkingCards {
     func getCards(action: @escaping (Result<Dictionary<Int, [Card]>, NetworkError>) -> Void)
-    func postCards(card: Card, action: @escaping (Result<Card, NetworkError>) -> Void)
+    func postCards(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void)
 }
 
 class CardsNetworkCenter: NetworkingCards {
@@ -22,7 +22,7 @@ class CardsNetworkCenter: NetworkingCards {
     }
     
     func getCards(action: @escaping (Result<KindOfCards, NetworkError>) -> Void) {
-        let url = "https://793ff2e3-7dec-416a-a0e4-09f4c24be362.mock.pstmn.io/api/cards"
+        let url = "http://13.124.169.220:8080/api/cards/show"
         self.networking.getToDoList(url: url) { (cardsResult) in
             switch cardsResult {
             case .success(let cards):
@@ -34,9 +34,9 @@ class CardsNetworkCenter: NetworkingCards {
         }
     }
     
-    func postCards(card: Card, action: @escaping (Result<Card, NetworkError>) -> Void) {
-        let url = "https://793ff2e3-7dec-416a-a0e4-09f4c24be362.mock.pstmn.io/api/cards"
-        self.networking.postToDoList(url: url, card: card) { (cardResult) in
+    func postCards(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void) {
+        let url = "http://13.124.169.220:8080/api/cards/create"
+        self.networking.postToDoList(url: url, card: cardForPost) { (cardResult) in
             switch cardResult {
             case .success(let card):
                 action(.success(card))
@@ -54,7 +54,7 @@ extension CardsNetworkCenter {
     private func manufactureCards(rowCards: [Card]) -> KindOfCards {
         var sortedCards = KindOfCards()
         for card in rowCards {
-            sortedCards[card.columnId, default: [Card]()].append(card)
+            sortedCards[card.columnType, default: [Card]()].append(card)
         }
         return sortCard(cards: sortedCards)
     }

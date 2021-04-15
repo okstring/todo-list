@@ -16,7 +16,7 @@ protocol CardOutputViewModel {
     func appearError(of error: String)
 }
 
-class AppearViewModel: CardOutputViewModel {
+class SectionViewModel: CardOutputViewModel {
     private(set) var cards: [Card]
     var error: String // 임시추가
     
@@ -30,15 +30,13 @@ class AppearViewModel: CardOutputViewModel {
         self.error = ""
         self.cards = [Card]()
         
-        self.cards = [CardFactory.makeCard(title: "안녕하세요", contents: "반갑습니다", mode: mode),
-                      CardFactory.makeCard(title: "안녕하세요", contents: "잘 부탁드립니다.", mode: mode)]
-
         cardsNetworkCenter.getCards { (kindOfCardsResult) in
             switch kindOfCardsResult {
             case .success(let kindOfCards):
                 self.cards = kindOfCards[self.mode.rawValue, default: [Card]()]
                 self.passingData()
             case .failure(let error):
+                print(error)
                 self.error = error.localizedDescription
             }
         }

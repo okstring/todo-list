@@ -7,11 +7,9 @@
 
 import UIKit
 
-protocol DataPassable: class {
-    func passData() -> [Card]?
-}
-
-class SectionViewController: UIViewController, DataPassable {
+class SectionViewController: UIViewController {
+    static let storyboardID = "sectionViewController"
+    
     @IBOutlet weak private var TODOTableView: UITableView!
     @IBOutlet private var sectionViewDataSource: SectionViewDataSource!
     @IBOutlet weak private var sectionTitle: UILabel!
@@ -23,11 +21,11 @@ class SectionViewController: UIViewController, DataPassable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.sectionViewDataSource.dataSource = self
         self.setTODOTableView()
         guard let sectionMode = sectionMode else { return }
-        self.appearViewModel = AppearViewModel(mode: sectionMode)
+        self.appearViewModel = SectionViewModel(mode: sectionMode)
         self.changeCardViewModel = ChangeCardViewModel()
+        self.sectionViewDataSource.setAppearViewModel(of: self.appearViewModel)
         self.initHTTPMethodHandler()
         self.setTitleText()
         self.setTODOCount()
@@ -64,6 +62,7 @@ class SectionViewController: UIViewController, DataPassable {
         addView.modalPresentationStyle = .overCurrentContext
         guard let sectionMode = sectionMode else { return }
         addView.setSectionMode(mode: sectionMode)
+        addView.setAppearViewModel(of: self.changeCardViewModel)
         addView.modalTransitionStyle = .crossDissolve
         present(addView, animated: true, completion: nil)
     }
@@ -86,10 +85,6 @@ class SectionViewController: UIViewController, DataPassable {
         self.TODOTableView.dropDelegate = self
         self.TODOTableView.dragInteractionEnabled = true
         
-    }
-    
-    func passData() -> [Card]? {
-        return self.appearViewModel.cards
     }
     
     func setSectionMode(mode: SectionMode) {
@@ -116,12 +111,8 @@ extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegat
         case .move:
             let destinationIndexPath: IndexPath
             
-            if let indexPath = coordinator.destinationIndexPath {
-                destinationIndexPath = indexPath
-            } else {
-                let section = tableView.numberOfSections
-                destinationIndexPath = IndexPath(row: 0, section: section)
-            }
+            let section = tableView.numberOfSections
+            destinationIndexPath = IndexPath(row: 0, section: section)
             
             let item = coordinator.items.first!
             let dragItem = item.dragItem.localObject as! DragItem
@@ -129,8 +120,8 @@ extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegat
             
             let card = appearViewModel.cards[dragItem.indexPath.item]
             
-            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.item)
             appearViewModel.removeCard(at: dragItem.indexPath.section)
+            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section)
             
             self.TODOTableView.performBatchUpdates {
                 tableView.insertSections([destinationIndexPath.section], with: .automatic)

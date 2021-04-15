@@ -14,12 +14,10 @@ enum NetworkError: Error {
     case encodingJSON
 }
 
-
-
 protocol Networkable {
     var dataManager: DataManageable { get }
     func getToDoList(url: String, completionHandler: @escaping (Result<[Card], NetworkError>) -> Void)
-    func postToDoList(url: String, card: Card, completionHandler: @escaping (Result<Card, NetworkError>) -> Void)
+    func postToDoList(url: String, card: CardForPost, completionHandler: @escaping (Result<Card, NetworkError>) -> Void)
 }
 
 class Networking: Networkable {
@@ -53,30 +51,40 @@ class Networking: Networkable {
         }
     }
     
-    func postToDoList(url: String, card: Card, completionHandler: @escaping (Result<Card, NetworkError>) -> Void) {
+    func postToDoList(url: String, card: CardForPost, completionHandler: @escaping (Result<Card, NetworkError>) -> Void) {
         guard let url = URL(string: url) else { return }
         var request = URLRequest(url: url)
-        let encodedData = self.dataManager.encoding(encodable: card)
-        request.httpMethod = "POST"
-        request.httpBody = encodedData
-        
-        SessionManger.request(urlRequest: request) { (sessionResult) in
-            switch sessionResult {
-            case .success(let data):
+        self.dataManager.encoding(encodable: card) { (resultCard) in
+            switch resultCard {
+            case .success(let encodeData):
+                request.httpMethod = "POST"
+                request.httpBody = encodeData
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue("application/json", forHTTPHeaderField: "Accept")
                 
-                self.dataManager.decoding(decodable: Card.self, data: data, completion: { (JSONresult) in
-                    switch JSONresult {
-                    case .success(let card):
-                        completionHandler(.success(card))
-                    case .failure(let JSONError):
-                        completionHandler(.failure(JSONError))
+                SessionManger.request(urlRequest: request) { (sessionResult) in
+                    switch sessionResult {
+                    case .success(let data):
+                        
+                        self.dataManager.decoding(decodable: Card.self, data: data, completion: { (JSONresult) in
+                            switch JSONresult {
+                            case .success(let card):
+                                completionHandler(.success(card))
+                            case .failure(let JSONError):
+                                completionHandler(.failure(JSONError))
+                            }
+                        })
+                    case .failure(let networkError):
+                        completionHandler(.failure(networkError))
                     }
-                })
-                
-            case .failure(let networkError):
-                completionHandler(.failure(networkError))
+                }
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
+            
         }
+        
+        
     }
     
 }
