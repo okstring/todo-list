@@ -8,7 +8,7 @@
 import UIKit
 
 class SectionViewDelegate: NSObject {
-    
+    var presentModifyVieControllerHandler: ((Int) -> ())?
 }
 
 extension SectionViewDelegate: UITableViewDelegate {
@@ -19,22 +19,25 @@ extension SectionViewDelegate: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-            return UIContextMenuConfiguration(identifier: nil,
-                                                  previewProvider: nil,
-                                                  actionProvider: {
-                        suggestedActions in
-                    let inspectAction =
-                        UIAction(title: NSLocalizedString("완료한 일로 이동", comment: "")) { action in
-
-                        }
-                    let duplicateAction =
-                        UIAction(title: NSLocalizedString("수정하기", comment: "")) { action in
-                        }
-                    let deleteAction =
-                        UIAction(title: NSLocalizedString("삭제하기", comment: ""),
-                                 attributes: .destructive) { action in
-                        }
-                    return UIMenu(title: "", children: [inspectAction, duplicateAction, deleteAction])
-                })
-        }
+        return UIContextMenuConfiguration(identifier: nil,
+                                          previewProvider: nil,
+                                          actionProvider: {
+                                            suggestedActions in
+                                            let inspectAction =
+                                                UIAction(title: NSLocalizedString("완료한 일로 이동", comment: "")) { action in
+                                                    
+                                                }
+                                            let duplicateAction =
+                                                UIAction(title: NSLocalizedString("수정하기", comment: "")) { action in
+                                                    print(indexPath.section)
+                                                    self.presentModifyVieControllerHandler?(indexPath.section)
+                                                }
+                                            let deleteAction =
+                                                UIAction(title: NSLocalizedString("삭제하기", comment: ""),
+                                                         attributes: .destructive) { action in
+                                                }
+                                            return UIMenu(title: "", children: [inspectAction, duplicateAction, deleteAction])
+                                          })
+    }
+    
 }

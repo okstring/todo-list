@@ -14,6 +14,7 @@ protocol CardOutputViewModel {
     func insertCard(of card: Card, at index: Int)
     func removeCard(at index: Int)
     func appearError(of error: String)
+    func modifyCard(card: Card)
 }
 
 class SectionViewModel: CardOutputViewModel {
@@ -45,11 +46,14 @@ class SectionViewModel: CardOutputViewModel {
     
     func frontEnqueue(card: Card) {
         self.cards.insert(card, at: 0)
-        self.passingData()
+    }
+    
+    func modifyCard(card: Card) {
+        guard let modifyCardIndex = self.cards.firstIndex(where: { $0.id == card.id }) else { return }
+        self.cards[modifyCardIndex] = card
     }
     
     func insertCard(of card: Card, at index: Int) {
-        print(index)
         self.cards.insert(card, at: index)
     }
     
