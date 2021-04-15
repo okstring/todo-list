@@ -7,12 +7,16 @@
 
 import Foundation
 
-class Networking {
-    let session: URLSession
-    let dataManager: DataManageable
+protocol Networkable {
+    var dataManager: DataManageable { get }
+    func getToDoList(url: String, completionHandler: @escaping ([Card])->Void)
+    func postToDoList(url: String, card: Card, comletionHandler: @escaping (Card) -> Void)
+}
+
+class Networking: Networkable {
+    var dataManager: DataManageable
     
     init() {
-        session = .shared
         self.dataManager = DataManager()
     }
     

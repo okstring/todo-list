@@ -15,7 +15,7 @@ protocol NetworkingCards {
 class CardsNetworkCenter: NetworkingCards {
     typealias KindOfCards = Dictionary<Int, [Card]>
     
-    let networking: Networking
+    let networking: Networkable
     
     init() {
         self.networking = Networking()
