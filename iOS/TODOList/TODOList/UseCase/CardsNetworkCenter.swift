@@ -10,6 +10,7 @@ import Foundation
 protocol NetworkingCards {
     func getCards(action: @escaping (Result<Dictionary<Int, [Card]>, NetworkError>) -> Void)
     func postCards(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void)
+    func deleteCards(card: Card)
 }
 
 class CardsNetworkCenter: NetworkingCards {
@@ -44,6 +45,13 @@ class CardsNetworkCenter: NetworkingCards {
                 action(.failure(error))
             }
         }
+    }
+    
+    func deleteCards(card: Card) {
+        let id = card.id
+        let url = "http://13.124.169.220:8080/api/cards/\(id)/delete"
+        self.networking.deleteToDoList(url: url)
+        
     }
     
     //TODO: move(PUT), update(PUT), delete(DELETE) 배포 후 추가 예정

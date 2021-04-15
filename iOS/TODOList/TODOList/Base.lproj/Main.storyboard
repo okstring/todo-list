@@ -242,6 +242,7 @@
                         <outlet property="addButton" destination="lKw-w3-fDm" id="BB2-QD-nsE"/>
                         <outlet property="sectionTitle" destination="GOo-3b-3me" id="BXL-rU-XEr"/>
                         <outlet property="sectionViewDataSource" destination="WJB-cl-lP7" id="qQp-J8-BIn"/>
+                        <outlet property="sectionViewDelegate" destination="kjb-21-g9E" id="Rsp-pt-v98"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j8h-aN-DkO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -314,7 +315,6 @@
                                                 <state key="normal" title="등록">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
-                                                <state key="disabled" title="등록"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="3"/>
@@ -359,6 +359,7 @@
                     </view>
                     <connections>
                         <outlet property="bodyField" destination="Lfj-oR-65E" id="tXR-Bq-yhk"/>
+                        <outlet property="formatTitle" destination="Lfz-pK-mS0" id="XoD-fy-ugn"/>
                         <outlet property="subjectField" destination="96r-Hy-xC3" id="GbW-zH-57k"/>
                         <outlet property="writeButton" destination="bXM-ak-P1n" id="aRR-KT-zHx"/>
                     </connections>

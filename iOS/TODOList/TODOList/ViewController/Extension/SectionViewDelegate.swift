@@ -8,7 +8,7 @@
 import UIKit
 
 class SectionViewDelegate: NSObject {
-    
+    var switchModifyController: (() -> Void)?
 }
 
 extension SectionViewDelegate: UITableViewDelegate {
@@ -29,6 +29,7 @@ extension SectionViewDelegate: UITableViewDelegate {
                         }
                     let duplicateAction =
                         UIAction(title: NSLocalizedString("수정하기", comment: "")) { action in
+                            self.switchModifyController!()
                         }
                     let deleteAction =
                         UIAction(title: NSLocalizedString("삭제하기", comment: ""),

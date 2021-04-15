@@ -50,6 +50,6 @@ class CardViewModel: CardInputViewModel {
     }
     
     func deleteCard(card: Card) {
-        //TODO: - DELETE
+        self.cardsNetworkCenter.deleteCards(card: card)
     }
 }

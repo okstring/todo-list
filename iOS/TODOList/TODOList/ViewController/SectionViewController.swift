@@ -11,6 +11,7 @@ class SectionViewController: UIViewController {
     static let storyboardID = "sectionViewController"
     
     @IBOutlet weak private var TODOTableView: UITableView!
+    @IBOutlet var sectionViewDelegate: SectionViewDelegate!
     @IBOutlet private var sectionViewDataSource: SectionViewDataSource!
     @IBOutlet weak private var sectionTitle: UILabel!
     @IBOutlet weak private var TODOCount: UILabel!
@@ -29,6 +30,22 @@ class SectionViewController: UIViewController {
         self.initHTTPMethodHandler()
         self.setTitleText()
         self.setTODOCount()
+        
+        //새로 추가한 메소드
+        switchModifyController() // modify모드 컨트롤러
+    }
+    
+    func switchModifyController() {
+        self.sectionViewDelegate.switchModifyController = {
+            let addView = self.storyboard?.instantiateViewController(withIdentifier: AddViewController.identifier) as! AddViewController
+            addView.modalPresentationStyle = .overCurrentContext
+            guard let sectionMode = self.sectionMode else { return }
+            addView.setSectionMode(mode: sectionMode)
+            addView.setAppearViewModel(of: self.changeCardViewModel)
+            addView.modalTransitionStyle = .crossDissolve
+            addView.setFormatType(type: .modify)
+            self.present(addView, animated: true, completion: nil)
+        }
     }
     
     private func initHTTPMethodHandler() {
@@ -51,8 +68,10 @@ class SectionViewController: UIViewController {
             }
         }
         
-        self.sectionViewDataSource.deleteCard = { card in
+        self.sectionViewDataSource.deleteCard = { indexPath, card in
+            self.appearViewModel.removeCard(at: indexPath.row)
             self.changeCardViewModel.deleteCard(card: card)
+            
         }
         
     }
