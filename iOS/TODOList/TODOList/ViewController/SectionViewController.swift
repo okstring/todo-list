@@ -12,6 +12,7 @@ class SectionViewController: UIViewController {
     
     @IBOutlet weak private var TODOTableView: UITableView!
     @IBOutlet private var sectionViewDataSource: SectionViewDataSource!
+    @IBOutlet private var sectionViewDelegate: SectionViewDelegate!
     @IBOutlet weak private var sectionTitle: UILabel!
     @IBOutlet weak private var TODOCount: UILabel!
     @IBOutlet weak private var addButton: UIButton!
@@ -32,6 +33,13 @@ class SectionViewController: UIViewController {
     }
     
     private func initHTTPMethodHandler() {
+        self.changeCardViewModel.modifyCardHandler = { card in
+            self.appearViewModel.modifyCard(card: card)
+            DispatchQueue.main.async {
+                self.TODOTableView.reloadData()
+            }
+        }
+        
         self.changeCardViewModel.addCardHandler = { card in
             self.appearViewModel.frontEnqueue(card: card)
             DispatchQueue.main.async {
@@ -55,18 +63,13 @@ class SectionViewController: UIViewController {
             self.changeCardViewModel.deleteCard(card: card)
         }
         
-        
-        
+        self.sectionViewDelegate.presentModifyVieControllerHandler = { index in
+            self.setInstanceViewController(mode: .modify, cardIndex: index)
+        }
     }
     
     @IBAction func tapAddButton(_ sender: UIButton) {
-        let addView = self.storyboard?.instantiateViewController(withIdentifier: AddViewController.identifier) as! AddViewController
-        addView.modalPresentationStyle = .overCurrentContext
-        guard let sectionMode = sectionMode else { return }
-        addView.setSectionMode(mode: sectionMode)
-        addView.setAppearViewModel(of: self.changeCardViewModel)
-        addView.modalTransitionStyle = .crossDissolve
-        present(addView, animated: true, completion: nil)
+        setInstanceViewController(mode: .add)
     }
     
     private func setTODOCount() {
@@ -92,6 +95,23 @@ class SectionViewController: UIViewController {
     func setSectionMode(mode: SectionMode) {
         self.sectionMode = mode
     }
+    
+    private func setInstanceViewController(mode: PopupViewController.SubmitType, cardIndex: Int? = nil) {
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: PopupViewController.identifier) as! PopupViewController
+        viewController.modalPresentationStyle = .overCurrentContext
+        guard let sectionMode = sectionMode else { return }
+        viewController.setSectionMode(mode: sectionMode)
+        viewController.setViewModel(inputViewModel: self.changeCardViewModel, outputViewModel: self.appearViewModel)
+        viewController.setSubmitType(of: mode)
+        if mode == .modify {
+            guard let index = cardIndex else { return }
+            let willModifyCard = self.appearViewModel.cards[index]
+            viewController.receiveModifyCard(of: willModifyCard)
+        }
+        viewController.modalTransitionStyle = .crossDissolve
+        present(viewController, animated: true, completion: nil)
+    }
+    
 }
 
 struct DragItem {
@@ -113,21 +133,22 @@ extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegat
         case .move:
             let destinationIndexPath: IndexPath
             
-            let section = tableView.numberOfSections
+            let section = coordinator.destinationIndexPath!.section
+            
             destinationIndexPath = IndexPath(row: 0, section: section)
             
             let item = coordinator.items.first!
             let dragItem = item.dragItem.localObject as! DragItem
             let appearViewModel = dragItem.appearViewControll
             
-            let card = appearViewModel.cards[dragItem.indexPath.item]
+            let card = appearViewModel.cards[dragItem.indexPath.section]
             
             appearViewModel.removeCard(at: dragItem.indexPath.section)
             self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section)
             
             self.TODOTableView.performBatchUpdates {
-                tableView.insertSections([destinationIndexPath.section], with: .automatic)
                 dragItem.tableView.deleteSections([dragItem.indexPath.section], with: .automatic)
+                tableView.insertSections([destinationIndexPath.section], with: .automatic)
             }
         default:
             return

@@ -10,7 +10,7 @@
 		220E7CCD262281C000B07364 /* BundleOfCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E7CCC262281C000B07364 /* BundleOfCard.swift */; };
 		220E7CD0262281C600B07364 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E7CCF262281C600B07364 /* Card.swift */; };
 		220E7CD72622832B00B07364 /* CardsNetworkCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220E7CD62622832B00B07364 /* CardsNetworkCenter.swift */; };
-		22139783261EA4840091C577 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22139782261EA4840091C577 /* AddViewController.swift */; };
+		22139783261EA4840091C577 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22139782261EA4840091C577 /* PopupViewController.swift */; };
 		222C84362628734D0034E139 /* BundleOfHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C84352628734D0034E139 /* BundleOfHistory.swift */; };
 		222C84392628746B0034E139 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C84382628746B0034E139 /* Action.swift */; };
 		2231ACB62624966700D3AC04 /* SectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2231ACB52624966700D3AC04 /* SectionViewDelegate.swift */; };
@@ -48,7 +48,7 @@
 		220E7CCC262281C000B07364 /* BundleOfCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleOfCard.swift; sourceTree = "<group>"; };
 		220E7CCF262281C600B07364 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		220E7CD62622832B00B07364 /* CardsNetworkCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsNetworkCenter.swift; sourceTree = "<group>"; };
-		22139782261EA4840091C577 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		22139782261EA4840091C577 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		222C84352628734D0034E139 /* BundleOfHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleOfHistory.swift; sourceTree = "<group>"; };
 		222C84382628746B0034E139 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		2231ACB52624966700D3AC04 /* SectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewDelegate.swift; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 			children = (
 				22560CE0261C310F00E2B80D /* MainViewController.swift */,
 				22560CF8261C557200E2B80D /* SectionViewController.swift */,
-				22139782261EA4840091C577 /* AddViewController.swift */,
+				22139782261EA4840091C577 /* PopupViewController.swift */,
 				223CAAD7262050B100358D84 /* Extension */,
 			);
 			path = ViewController;
@@ -300,7 +300,7 @@
 				B35B442A261D78DA00FD5E83 /* DataManager.swift in Sources */,
 				223CAACA2620502900358D84 /* SectionMode.swift in Sources */,
 				220E7CD0262281C600B07364 /* Card.swift in Sources */,
-				22139783261EA4840091C577 /* AddViewController.swift in Sources */,
+				22139783261EA4840091C577 /* PopupViewController.swift in Sources */,
 				220E7CD72622832B00B07364 /* CardsNetworkCenter.swift in Sources */,
 				22560CDD261C310F00E2B80D /* AppDelegate.swift in Sources */,
 				22A41EED261C91B200248CAF /* SectionViewDataSource.swift in Sources */,

@@ -11,9 +11,11 @@ protocol CardInputViewModel {
     var subject: Observable<String> { get }
     var body: Observable<String> { get }
     var addCardHandler: ((Card) -> Void)? { get set }
+    var modifyCardHandler: ((Card) -> Void)? { get set }
     var errorAddCardHandler: ((String) -> Void)? { get set }
     func addCard(mode: SectionMode)
     func deleteCard(card: Card)
+    func modifyCard(mode: SectionMode, id: Int)
 }
 
 class CardViewModel: CardInputViewModel {
@@ -22,6 +24,7 @@ class CardViewModel: CardInputViewModel {
     private var cardsNetworkCenter: NetworkingCards
     
     var addCardHandler: ((Card) -> Void)?
+    var modifyCardHandler: ((Card) -> Void)?
     var errorAddCardHandler: ((String) -> Void)?
     
     init(subject: String, body: String) {
@@ -51,5 +54,19 @@ class CardViewModel: CardInputViewModel {
     
     func deleteCard(card: Card) {
         //TODO: - DELETE
+    }
+    
+    func modifyCard(mode: SectionMode, id: Int) {
+        guard let title = subject.value else { return }
+        guard let contents = body.value else { return }
+        let cardForModify = CardForModify(title: title, contents: contents)
+        self.cardsNetworkCenter.modifyCards(cardForModify: cardForModify, id: id) { (result) in
+            switch result {
+            case .success(let card):
+                self.modifyCardHandler?(card)
+            case .failure(let error):
+                self.errorAddCardHandler?(error.localizedDescription)
+            }
+        }
     }
 }

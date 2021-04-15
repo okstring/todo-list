@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CardForModify {
+struct CardForModify: Codable {
     var title: String
     var contents: String
 }

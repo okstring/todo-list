@@ -11,6 +11,7 @@ protocol NetworkingCards {
     func getCards(action: @escaping (Result<Dictionary<Int, [Card]>, NetworkError>) -> Void)
     func postCards(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void)
     func getAction(action: @escaping (Result<[ActionForView], NetworkError>) -> Void)
+    func modifyCards(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void)
 }
 
 class CardsNetworkCenter: NetworkingCards {
@@ -58,6 +59,18 @@ class CardsNetworkCenter: NetworkingCards {
                 action(.failure(error))
             }
         }
+    }
+    
+    func modifyCards(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void) {
+        let url = "http://13.124.169.220:8080/api/cards/\(id)/update"
+        self.networking.modifyToDoList(url: url, card: cardForModify, completionHandler: { (cardResult) in
+            switch cardResult {
+            case .success(let card):
+                action(.success(card))
+            case .failure(let error):
+                action(.failure(error))
+            }
+        })
     }
     
 }
