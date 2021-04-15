@@ -9,9 +9,11 @@ import Foundation
 
 class Networking {
     let session: URLSession
+    let dataManager: DataManageable
     
     init() {
         session = .shared
+        self.dataManager = DataManager()
     }
     
     func getToDoList(url: String, completionHandler: @escaping ([Card])->Void) {
@@ -19,7 +21,7 @@ class Networking {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         SessionManger.request(urlRequest: request) { (data) in
-            guard let decodedData = DataManager.decoding(decodable: BundleOfCards.self, data: data) else { return }
+            guard let decodedData = self.dataManager.decoding(decodable: BundleOfCards.self, data: data) else { return }
             completionHandler(decodedData.cards)
         }
     }
@@ -27,12 +29,13 @@ class Networking {
     func postToDoList(url: String, card: Card, comletionHandler: @escaping (Card) -> Void) {
         guard let url = URL(string: url) else { return }
         var request = URLRequest(url: url)
-        let encodedData = DataManager.encoding(encodable: card)
+        let encodedData = self.dataManager.encoding(encodable: card)
         request.httpMethod = "POST"
         request.httpBody = encodedData
         SessionManger.request(urlRequest: request) { (data) in
-            guard let card = DataManager.decoding(decodable: Card.self, data: data) else { return }
+            guard let card = self.dataManager.decoding(decodable: Card.self, data: data) else { return }
             comletionHandler(card)
         }
     }
+    
 }
