@@ -12,6 +12,7 @@ protocol CardOutputViewModel {
     var getDataHandler: (() -> ())? { get set }
     func frontEnqueue(card: Card)
     func insertCard(of card: Card, at index: Int)
+    func removeCard(at index: Int)
 }
 
 class AppearViewModel: CardOutputViewModel {
@@ -25,10 +26,13 @@ class AppearViewModel: CardOutputViewModel {
         self.mode = mode
         self.cardsNetworkCenter = CardsNetworkCenter()
         self.cards = [Card]()
+        
+        self.cards = [CardFactory.makeCard(title: "안녕하세요", contents: "반갑습니다", mode: mode),
+                      CardFactory.makeCard(title: "안녕하세요", contents: "잘 부탁드립니다.", mode: mode)]
 
-        cardsNetworkCenter.getCards { (dict) in
-            self.cards = dict[self.mode.rawValue, default: [Card]()]
-        }
+//        cardsNetworkCenter.getCards { (dict) in
+//            self.cards = dict[self.mode.rawValue, default: [Card]()]
+//        }
     }
     
     func frontEnqueue(card: Card) {
@@ -38,6 +42,10 @@ class AppearViewModel: CardOutputViewModel {
     
     func insertCard(of card: Card, at index: Int) {
         self.cards.insert(card, at: index)
+    }
+    
+    func removeCard(at index: Int) {
+        self.cards.remove(at: index)
     }
     
     private func passingData() {

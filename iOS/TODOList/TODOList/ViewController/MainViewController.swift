@@ -114,5 +114,3 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         return 500
     }
 }
-
-
