@@ -7,21 +7,27 @@
 
 import Foundation
 
-class DataManager {
-    static let iso8601Full: DateFormatter = {
+protocol DataManageable {
+    var iso8601Full: DateFormatter { get }
+    func decoding<T: Decodable>(decodable: T.Type, data: Data) -> T?
+    func encoding<T: Encodable>(encodable: T) -> Data?
+}
+
+class DataManager: DataManageable {
+    var iso8601Full: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         formatter.calendar = Calendar(identifier: .iso8601)
         return formatter
     }()
     
-    static func decoding<T: Decodable>(decodable: T.Type, data: Data) -> T? {
+    func decoding<T: Decodable>(decodable: T.Type, data: Data) -> T? {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(iso8601Full)
         return try? decoder.decode(decodable, from: data)
     }
     
-    static func encoding<T: Encodable>(encodable: T) -> Data? {
+    func encoding<T: Encodable>(encodable: T) -> Data? {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .formatted(iso8601Full)
         return try? encoder.encode(encodable)
