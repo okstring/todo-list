@@ -78,6 +78,10 @@ class SectionViewController: UIViewController, DataPassable {
         self.TODOTableView.rowHeight = UITableView.automaticDimension
         self.TODOTableView.estimatedRowHeight = 500
         self.TODOTableView.dragInteractionEnabled = true
+        self.TODOTableView.dragDelegate = self
+        self.TODOTableView.dropDelegate = self
+        self.TODOTableView.dragInteractionEnabled = true
+        
     }
     
     func passData() -> [Card]? {
@@ -86,5 +90,54 @@ class SectionViewController: UIViewController, DataPassable {
     
     func setSectionMode(mode: SectionMode) {
         self.sectionMode = mode
+    }
+}
+
+struct DragItem {
+    var appearViewControll: CardOutputViewModel
+    var indexPath: IndexPath
+    var tableView: UITableView
+}
+
+extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        let provider = NSItemProvider()
+        let item = UIDragItem(itemProvider: provider)
+        item.localObject = DragItem(appearViewControll: self.appearViewModel, indexPath: indexPath, tableView: tableView)
+        return [item]
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        switch coordinator.proposal.operation {
+        case .move:
+            let destinationIndexPath: IndexPath
+            
+            if let indexPath = coordinator.destinationIndexPath {
+                destinationIndexPath = indexPath
+            } else {
+                let section = tableView.numberOfSections
+                destinationIndexPath = IndexPath(row: 0, section: section)
+            }
+            
+            let item = coordinator.items.first!
+            let dragItem = item.dragItem.localObject as! DragItem
+            let appearViewModel = dragItem.appearViewControll
+            
+            let card = appearViewModel.cards[dragItem.indexPath.item]
+            
+            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.item)
+            appearViewModel.removeCard(at: dragItem.indexPath.section)
+            
+            self.TODOTableView.performBatchUpdates {
+                tableView.insertSections([destinationIndexPath.section], with: .automatic)
+                dragItem.tableView.deleteSections([dragItem.indexPath.section], with: .automatic)
+            }
+        default:
+            return
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
 }
