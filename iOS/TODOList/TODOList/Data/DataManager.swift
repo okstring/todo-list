@@ -10,7 +10,7 @@ import Foundation
 protocol DataManageable {
     var iso8601Full: DateFormatter { get }
     func decoding<T: Decodable>(decodable: T.Type, data: Data, completion: @escaping (Result<T, NetworkError>) -> Void)
-    func encoding<T: Encodable>(encodable: T, completion: @escaping (Result<Data, JSONError>) -> Void)
+    func encoding<T: Encodable>(encodable: T, completion: @escaping (Result<Data, NetworkError>) -> Void)
 }
 
 class DataManager: DataManageable {

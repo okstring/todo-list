@@ -8,7 +8,7 @@
 import UIKit
 
 class MainViewController: UIViewController {
-    enum Segues {
+    enum Segues: CaseIterable {
         static let willTODO = "WillTODO"
         static let doingTODO = "DoingTODO"
         static let completeTODO = "CompleteTODO"
@@ -19,12 +19,13 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.makeMenuView()
         self.makeTableView()
         self.setConstraintOfTableView()
         self.setCloseButton()
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Segues.willTODO {
             guard let viewController = segue.destination as? SectionViewController else { return }
@@ -37,7 +38,7 @@ class MainViewController: UIViewController {
             viewController.setSectionMode(mode: .completeTODO)
         }
     }
-    
+
     @IBAction func touchSideMenuButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
             self.menuView.frame.origin.x = self.view.frame.maxX * 0.65
