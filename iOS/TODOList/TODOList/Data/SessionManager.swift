@@ -9,7 +9,7 @@ import Foundation
 
 class SessionManger {
     static func request(urlRequest: URLRequest, completion: @escaping (Data)-> Void) {
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, _) in
+        URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, _, _) in
             guard let data = data else { return }
             completion(data)
         }.resume()
