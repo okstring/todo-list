@@ -10,6 +10,7 @@ import Foundation
 protocol NetworkingCards {
     func getCards(action: @escaping (Result<Dictionary<Int, [Card]>, NetworkError>) -> Void)
     func postCards(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void)
+    func getAction(action: @escaping (Result<[ActionForView], NetworkError>) -> Void)
 }
 
 class CardsNetworkCenter: NetworkingCards {
@@ -46,11 +47,62 @@ class CardsNetworkCenter: NetworkingCards {
         }
     }
     
-    //TODO: move(PUT), update(PUT), delete(DELETE) 배포 후 추가 예정
+    func getAction(action: @escaping (Result<[ActionForView], NetworkError>) -> Void) {
+        let url = "http://13.124.169.220:8080/api/actions/show"
+        self.networking.getHistory(url: url) { (actionResult) in
+            switch actionResult {
+            case .success(let actions):
+                let allStatus = self.manufactureActions(rowActions: actions)
+                action(.success(allStatus))
+            case .failure(let error):
+                action(.failure(error))
+            }
+        }
+    }
     
 }
 
 extension CardsNetworkCenter {
+    private func manufactureActions(rowActions: [Action]) -> [ActionForView] {
+        let actions = rowActions
+            .sorted(by: { $0.createdDateTime > $1.createdDateTime })
+            .map { (action) -> ActionForView? in
+                guard let beforeSectionMode = SectionMode(rawValue: action.columnFrom)?.sectionTitle else { return nil }
+                guard let afterSectionMode = SectionMode(rawValue: action.columnTo)?.sectionTitle else { return nil }
+                guard let actionType = ActionType(rawValue: action.actionType) else { return nil }
+                let contents = makeActionContents(before: beforeSectionMode, after: afterSectionMode, title: action.cardTitle, actionType: actionType)
+                let beforeDate = makeBeforeDate(createdDate: action.createdDateTime)
+                return ActionForView(contents: contents, beforeDate: beforeDate)
+            }.compactMap({ $0 })
+        return actions
+    }
+    
+    private func makeBeforeDate(createdDate: Date) -> String {
+        var beforeDate = ""
+        let subDate = Int(Date().timeIntervalSince1970 - createdDate.timeIntervalSince1970)
+        if subDate < 60 {
+            beforeDate = "\(subDate)초 전"
+        } else if subDate / 60 < 60 {
+            beforeDate = "\(subDate / 60)분 전"
+        } else if subDate / 3600 < 60 {
+            beforeDate = "\(subDate / 3600)시간 전"
+        } else {
+            beforeDate = "\(subDate / 86400)일 전"
+        }
+        return beforeDate
+    }
+    
+    private func makeActionContents(before: String, after: String, title: String, actionType: ActionType) -> String {
+        var contents = ""
+        switch actionType {
+        case .MOVE:
+            contents = "\(title)을 \(before)에서 \(after)로 이동하였습니다."
+        default:
+            contents = "\(after)에 \(title)을 등록하였습니다."
+        }
+        return contents
+    }
+    
     private func manufactureCards(rowCards: [Card]) -> KindOfCards {
         var sortedCards = KindOfCards()
         for card in rowCards {

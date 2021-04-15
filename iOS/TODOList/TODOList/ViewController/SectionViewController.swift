@@ -55,6 +55,8 @@ class SectionViewController: UIViewController {
             self.changeCardViewModel.deleteCard(card: card)
         }
         
+        
+        
     }
     
     @IBAction func tapAddButton(_ sender: UIButton) {

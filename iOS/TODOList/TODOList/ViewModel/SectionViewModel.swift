@@ -18,7 +18,7 @@ protocol CardOutputViewModel {
 
 class SectionViewModel: CardOutputViewModel {
     private(set) var cards: [Card]
-    var error: String // 임시추가
+    private(set) var error: String // 임시추가
     
     private var mode: SectionMode
     var getDataHandler: (() -> ())?

@@ -18,6 +18,7 @@ protocol Networkable {
     var dataManager: DataManageable { get }
     func getToDoList(url: String, completionHandler: @escaping (Result<[Card], NetworkError>) -> Void)
     func postToDoList(url: String, card: CardForPost, completionHandler: @escaping (Result<Card, NetworkError>) -> Void)
+    func getHistory(url: String, completionHandler: @escaping (Result<[Action], NetworkError>) -> Void)
 }
 
 class Networking: Networkable {
@@ -81,10 +82,34 @@ class Networking: Networkable {
             case .failure(let error):
                 completionHandler(.failure(error))
             }
-            
         }
+    }
+    
+    func getHistory(url: String, completionHandler: @escaping (Result<[Action], NetworkError>) -> Void) {
+        guard let url = URL(string: url) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         
-        
+        SessionManger.request(urlRequest: request) { (sessionResult) in
+            switch sessionResult {
+            case .success(let data):
+                
+                self.dataManager.decoding(decodable: BundleOfAction.self, data: data, completion: { (JSONresult) in
+                    switch JSONresult {
+                    case .success(let bundleOfCard):
+                        completionHandler(.success(bundleOfCard.actions))
+                    case .failure(let JSONError):
+                        completionHandler(.failure(JSONError))
+                    }
+                })
+                
+            case .failure(let networkError):
+                
+                completionHandler(.failure(networkError))
+            }
+        }
     }
     
 }
