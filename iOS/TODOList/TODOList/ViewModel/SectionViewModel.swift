@@ -49,6 +49,7 @@ class SectionViewModel: CardOutputViewModel {
     }
     
     func insertCard(of card: Card, at index: Int) {
+        print(index)
         self.cards.insert(card, at: index)
     }
     

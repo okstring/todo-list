@@ -21,7 +21,7 @@
 		22560CE9261C311400E2B80D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22560CE7261C311400E2B80D /* LaunchScreen.storyboard */; };
 		22560CF9261C557200E2B80D /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22560CF8261C557200E2B80D /* SectionViewController.swift */; };
 		22560CFE261C58D800E2B80D /* SectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22560CFD261C58D800E2B80D /* SectionCell.swift */; };
-		22657153261F1FB000E455FA /* ChangeCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22657152261F1FB000E455FA /* ChangeCardViewModel.swift */; };
+		22657153261F1FB000E455FA /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22657152261F1FB000E455FA /* CardViewModel.swift */; };
 		22657157261F237000E455FA /* ObservingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22657156261F237000E455FA /* ObservingTextField.swift */; };
 		2265715A261F2F5500E455FA /* SubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22657159261F2F5500E455FA /* SubmitButton.swift */; };
 		22A41EED261C91B200248CAF /* SectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A41EEC261C91B200248CAF /* SectionViewDataSource.swift */; };
@@ -56,7 +56,7 @@
 		22560CEA261C311400E2B80D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22560CF8261C557200E2B80D /* SectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
 		22560CFD261C58D800E2B80D /* SectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCell.swift; sourceTree = "<group>"; };
-		22657152261F1FB000E455FA /* ChangeCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCardViewModel.swift; sourceTree = "<group>"; };
+		22657152261F1FB000E455FA /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		22657156261F237000E455FA /* ObservingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservingTextField.swift; sourceTree = "<group>"; };
 		22657159261F2F5500E455FA /* SubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButton.swift; sourceTree = "<group>"; };
 		22A41EEC261C91B200248CAF /* SectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewDataSource.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				22AE4A81261D97CF0081AA19 /* Obserable.swift */,
-				22657152261F1FB000E455FA /* ChangeCardViewModel.swift */,
+				22657152261F1FB000E455FA /* CardViewModel.swift */,
 				22AE4A79261D847B0081AA19 /* SectionViewModel.swift */,
 			);
 			path = ViewModel;
@@ -277,7 +277,7 @@
 				22560CE1261C310F00E2B80D /* MainViewController.swift in Sources */,
 				220E7CCD262281C000B07364 /* BundleOfCard.swift in Sources */,
 				22AE4A82261D97CF0081AA19 /* Obserable.swift in Sources */,
-				22657153261F1FB000E455FA /* ChangeCardViewModel.swift in Sources */,
+				22657153261F1FB000E455FA /* CardViewModel.swift in Sources */,
 				22560CE1261C310F00E2B80D /* MainViewController.swift in Sources */,
 				22ED908C2627E20200FBBEEE /* CardForModify.swift in Sources */,
 				B35B4427261D73D500FD5E83 /* Networking.swift in Sources */,
