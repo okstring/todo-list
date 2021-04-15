@@ -24,7 +24,7 @@ class SectionViewController: UIViewController {
         self.setTODOTableView()
         guard let sectionMode = sectionMode else { return }
         self.appearViewModel = SectionViewModel(mode: sectionMode)
-        self.changeCardViewModel = ChangeCardViewModel()
+        self.changeCardViewModel = CardViewModel()
         self.sectionViewDataSource.setAppearViewModel(of: self.appearViewModel)
         self.initHTTPMethodHandler()
         self.setTitleText()

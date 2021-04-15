@@ -38,7 +38,6 @@ class CardViewModel: CardInputViewModel {
     func addCard(mode: SectionMode) {
         guard let title = subject.value else { return }
         guard let contents = body.value else { return }
-        
         let cardForPost = CardForPost(title: title, contents: contents, columnType: mode.rawValue)
         self.cardsNetworkCenter.postCards(cardForPost: cardForPost) { (cardResult) in
             switch cardResult {
