@@ -16,6 +16,7 @@ class MainViewController: UIViewController {
     var menuView: UIView!
     var closeButton: UIButton!
     var menuTableView: UITableView!
+    private var menuViewModel: MenuViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,13 @@ class MainViewController: UIViewController {
         self.makeTableView()
         self.setConstraintOfTableView()
         self.setCloseButton()
+        self.menuViewModel = MenuViewModel()
+        
+        self.menuViewModel.menuHandler = {
+            DispatchQueue.main.async {
+                self.menuTableView.reloadData()
+            }
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -40,6 +48,7 @@ class MainViewController: UIViewController {
     }
 
     @IBAction func touchSideMenuButton(_ sender: UIButton) {
+        self.menuViewModel.getActions()
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
             self.menuView.frame.origin.x = self.view.frame.maxX * 0.65
         }
@@ -94,11 +103,14 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.menuViewModel.actions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as? HistoryCell else { return HistoryCell() }
+        let actions = self.menuViewModel.actions
+        cell.contents.text = actions[indexPath.row].contents
+        cell.time.text = actions[indexPath.row].beforeDate
         cell.contents.sizeToFit()
         return cell
     }
@@ -108,7 +120,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 160
+        return 120
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
