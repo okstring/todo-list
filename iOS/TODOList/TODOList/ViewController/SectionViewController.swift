@@ -42,6 +42,10 @@ class SectionViewController: UIViewController, DataPassable {
             }
         }
         
+        self.changeCardViewModel.errorAddCardHandler = { errorMessage in
+            self.appearViewModel.appearError(of: errorMessage)
+        }
+        
         self.appearViewModel.getDataHandler = {
             DispatchQueue.main.async {
                 self.setTODOCount()

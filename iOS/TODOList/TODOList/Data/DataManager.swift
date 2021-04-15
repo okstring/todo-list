@@ -9,8 +9,8 @@ import Foundation
 
 protocol DataManageable {
     var iso8601Full: DateFormatter { get }
-    func decoding<T: Decodable>(decodable: T.Type, data: Data) -> T?
-    func encoding<T: Encodable>(encodable: T) -> Data?
+    func decoding<T: Decodable>(decodable: T.Type, data: Data, completion: @escaping (Result<T, NetworkError>) -> Void)
+    func encoding<T: Encodable>(encodable: T, completion: @escaping (Result<Data, JSONError>) -> Void)
 }
 
 class DataManager: DataManageable {
@@ -21,15 +21,25 @@ class DataManager: DataManageable {
         return formatter
     }()
     
-    func decoding<T: Decodable>(decodable: T.Type, data: Data) -> T? {
+    func decoding<T: Decodable>(decodable: T.Type, data: Data, completion: @escaping (Result<T, NetworkError>) -> Void) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(iso8601Full)
-        return try? decoder.decode(decodable, from: data)
+        do {
+            let decodeData = try decoder.decode(decodable, from: data)
+            completion(.success(decodeData))
+        } catch {
+            completion(.failure(.decodingJSON))
+        }
     }
     
-    func encoding<T: Encodable>(encodable: T) -> Data? {
+    func encoding<T: Encodable>(encodable: T, completion: @escaping (Result<Data, NetworkError>) -> Void) {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .formatted(iso8601Full)
-        return try? encoder.encode(encodable)
+        do {
+            let encodeData = try encoder.encode(encodable)
+            completion(.success(encodeData))
+        } catch {
+            completion(.failure(.decodingJSON))
+        }
     }
 }

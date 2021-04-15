@@ -9,6 +9,7 @@ import Foundation
 
 protocol CardInputViewModel {
     var addCardHandler: ((Card) -> Void)? { get set }
+    var errorAddCardHandler: ((String) -> Void)? { get set }
     func addCard(mode: SectionMode)
     func deleteCard(card: Card)
 }
@@ -19,6 +20,7 @@ class ChangeCardViewModel: CardInputViewModel {
     private var cardsNetworkCenter: NetworkingCards
     
     var addCardHandler: ((Card) -> Void)?
+    var errorAddCardHandler: ((String) -> Void)?
     
     init(subject: String, body: String) {
         self.subject = Observable(value: subject)
@@ -35,8 +37,13 @@ class ChangeCardViewModel: CardInputViewModel {
         guard let title = subject.value else { return }
         guard let contents = body.value else { return }
         let card = CardFactory.makeCard(title: title, contents: contents, mode: mode)
-        self.cardsNetworkCenter.postCards(card: card) { (card) in
-            self.addCardHandler?(card)
+        self.cardsNetworkCenter.postCards(card: card) { (cardResult) in
+            switch cardResult {
+            case .success(let card):
+                self.addCardHandler?(card)
+            case .failure(let error):
+                self.errorAddCardHandler?(error.localizedDescription)
+            }
         }
     }
     
