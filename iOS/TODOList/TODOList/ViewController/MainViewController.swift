@@ -13,6 +13,7 @@ class MainViewController: UIViewController {
         static let doingTODO = "DoingTODO"
         static let completeTODO = "CompleteTODO"
     }
+    @IBOutlet var backgroundView: UIView!
     var menuView: UIView!
     var closeButton: UIButton!
     var menuTableView: UITableView!
@@ -26,11 +27,17 @@ class MainViewController: UIViewController {
         self.setConstraintOfTableView()
         self.setCloseButton()
         self.menuViewModel = MenuViewModel()
-        
+        self.settingRecognitionWhenBackgroundTouched()
         self.menuViewModel.menuHandler = {
             DispatchQueue.main.async {
                 self.menuTableView.reloadData()
             }
+        }
+    }
+    
+    @objc func tappedBackGround() {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
+            self.menuView.frame.origin.x = self.view.frame.maxX
         }
     }
 
@@ -98,6 +105,12 @@ class MainViewController: UIViewController {
         self.closeButton.addTarget(self, action: #selector(closeMenuView), for: .touchUpInside)
         self.menuView.addSubview(self.closeButton)
     }
+    
+    func settingRecognitionWhenBackgroundTouched() {
+        self.backgroundView.becomeFirstResponder()
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedBackGround))
+        self.backgroundView.addGestureRecognizer(tapRecognizer)
+    }
 }
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
@@ -137,7 +150,7 @@ extension MainViewController {
         let attrAfterColumns = NSMutableAttributedString(string: action.afterSectionMode, attributes: attr)
         let attrTitle = NSMutableAttributedString(string: action.title, attributes: attr)
         let attrActionType = NSMutableAttributedString(string: action.actionType, attributes: attr)
-        let attrAt = NSMutableAttributedString(string: "를(을) ")
+        let attrAt = NSMutableAttributedString(string: "을 ")
         let attrFrom = NSMutableAttributedString(string: "에서 ")
         let attrWith = NSMutableAttributedString(string: "로 ")
         let attrTo = NSMutableAttributedString(string: "에 ")
