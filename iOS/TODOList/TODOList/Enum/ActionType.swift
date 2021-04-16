@@ -13,7 +13,7 @@ enum ActionType: String {
     case DELETE
     case MOVE
     
-    var sectionTitle: String {
+    var actionTitle: String {
         switch self {
         case .ADD: return "등록"
         case .UPDATE: return "수정"
