@@ -60,36 +60,175 @@ Shion(BE), Bongf(BE), Zeke(iOS), Isaac(iOS)
 
 ## 💾 API 구조
 
-[mockup url](https://793ff2e3-7dec-416a-a0e4-09f4c24be362.mock.pstmn.io/api/cards)
+### team06-todo URL 
+http://3.36.119.210:8080
 
-```json
+***
+
+|        | URL                            | 기능                  |
+| -----  | ------------------------------ | -------------------- |
+| Card   | `GET /api/cards/show`          | 전체 카드 목록을 가져온다. |
+| Card   | `POST /api/cards/create`       | 카드를 생성한다.         |
+| Card   | `PUT /api/cards/:id/move`      | 해당 카드를 이동한다.     |
+| Card   | `PUT /api/cards/:id/update`    | 해당 카드를 수정한다.     |
+| Card   | `DELETE /api/cards/:id/delete` | 해당 카드를 삭제한다.     |
+| Action | `GET /api/actions/show`        | 전체 로그 목록을 가져온다. |
+
+***
+
+### `GET /api/cards/show` 
+
+Response Body
+
+```
 {
-   "cards":[
-      {
-         "id":1,
-         "title":"GitHub 공부하기",
-         "contents":"add, commmit, push",
-         "column_id":1,
-         "media":"WEB"
-      },
-      {
-         "id":2,
-         "title":"블로그에 포스팅할 것",
-         "contents":"GitHub 공부내용 모던 자바스크립트 1장 공부내용",
-         "column_id":1,
-         "media":"APP"
-      },
-      {
-         "id":3,
-         "title":"HTML/CSS 공부하기",
-         "contents":"input 태크 실습+노션에 유형 정리",
-         "column_id":2,
-         "media":"WEB"
-      }
-   ]
+    "cards": [
+        {
+            "id": 1,
+            "title": "GitHub 공부하기",
+            "contents": "add, commit, push",
+            "columnType": 0,
+            "createdDateTime": "2021-04-07T15:52:48"
+        },
+        {
+            "id": 2,
+            "title": "블로그에 포스팅할 것",
+            "contents": "GitHub 공부내용 모던 자바스크립트 1장 공부내용",
+            "columnType": 1,
+            "createdDateTime": "2021-04-08T15:52:48"
+        },
+        {
+            "id": 3,
+            "title": "HTML/CSS 공부하기",
+            "contents": "input 태크 실습+노션에 유형 정리",
+            "columnType": 2,
+            "createdDateTime": "2021-04-09T15:52:48"
+        }
+    ]
 }
 ```
 
+### `POST /api/cards/create`
+
+Request Body
+
+```
+{
+    "title": "제목",
+    "contents": "내용",
+    "columnType": 0
+}
+```
+
+Response Body
+
+```
+{
+    "id": 4,
+    "title": "제목",
+    "contents": "내용",
+    "columnType": 0,
+    "createdDateTime": "2021-04-15T01:54:57.302"
+}
+```
+
+### `PUT /api/cards/:id/move`
+
+Request Body
+
+```
+{
+    "columnType": 2
+}
+```
+
+Response Body
+
+```
+{
+    "id": 4,
+    "title": "제목",
+    "contents": "내용",
+    "columnType": 2,
+    "createdDateTime": "2021-04-15T00:55:49"
+}
+```
+
+### `PUT /api/cards/:id/update`
+
+Request Body
+
+```
+{
+    "title": "안녕",
+    "contents": "하이"
+}
+```
+
+Response Body
+
+```
+{
+    "id": 4,
+    "title": "안녕",
+    "contents": "하이",
+    "columnType": 2,
+    "createdDateTime": "2021-04-15T00:55:49"
+}
+```
+
+### `DELETE /api/cards/:id/delete`
+
+Response Body
+
+```
+{
+    "id": 4,
+    "title": "안녕",
+    "contents": "하이",
+    "columnType": 2,
+    "createdDateTime": "2021-04-15T00:55:49"
+}
+```
+
+### `GET /api/actions/show`
+
+Response Body
+
+```
+{
+    "actions": [
+        {
+            "cardTitle": "제목",
+            "columnFrom": 0,
+            "columnTo": 0,
+            "actionType": "ADD",
+            "createdDateTime": "2021-04-15T00:55:49"
+        },
+        {
+            "cardTitle": "제목",
+            "columnFrom": 0,
+            "columnTo": 2,
+            "actionType": "MOVE",
+            "createdDateTime": "2021-04-15T01:57:07"
+        },
+        {
+            "cardTitle": "안녕",
+            "columnFrom": 0,
+            "columnTo": 0,
+            "actionType": "UPDATE",
+            "createdDateTime": "2021-04-15T01:59:34"
+        },
+        {
+            "cardTitle": "안녕",
+            "columnFrom": 0,
+            "columnTo": 0,
+            "actionType": "DELETE",
+            "createdDateTime": "2021-04-15T02:40:25"
+        }
+    ]
+}
+```
 
 
 
