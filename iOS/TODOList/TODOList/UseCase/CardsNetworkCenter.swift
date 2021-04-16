@@ -9,9 +9,9 @@ import Foundation
 
 protocol NetworkingCards {
     func getCards(action: @escaping (Result<Dictionary<Int, [Card]>, NetworkError>) -> Void)
-    func postCards(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void)
+    func postCard(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void)
     func getAction(action: @escaping (Result<[ActionForView], NetworkError>) -> Void)
-    func modifyCards(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void)
+    func modifyCard(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void)
 }
 
 class CardsNetworkCenter: NetworkingCards {
@@ -36,7 +36,7 @@ class CardsNetworkCenter: NetworkingCards {
         }
     }
     
-    func postCards(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void) {
+    func postCard(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void) {
         let url = "http://13.124.169.220:8080/api/cards/create"
         self.networking.postToDoList(url: url, card: cardForPost) { (cardResult) in
             switch cardResult {
@@ -61,9 +61,21 @@ class CardsNetworkCenter: NetworkingCards {
         }
     }
     
-    func modifyCards(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void) {
+    func modifyCard(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void) {
         let url = "http://13.124.169.220:8080/api/cards/\(id)/update"
         self.networking.modifyToDoList(url: url, card: cardForModify, completionHandler: { (cardResult) in
+            switch cardResult {
+            case .success(let card):
+                action(.success(card))
+            case .failure(let error):
+                action(.failure(error))
+            }
+        })
+    }
+    
+    func moveCard(cardForMove: CardForMove, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void) {
+        let url = "http://13.124.169.220:8080/api/cards/\(id)/move"
+        self.networking.moveToDoList(url: url, card: cardForMove, completionHandler: { (cardResult) in
             switch cardResult {
             case .success(let card):
                 action(.success(card))
@@ -85,6 +97,14 @@ extension CardsNetworkCenter {
                 guard let actionType = ActionType(rawValue: action.actionType) else { return nil }
                 let contents = makeActionContents(before: beforeSectionMode, after: afterSectionMode, title: action.cardTitle, actionType: actionType)
                 let beforeDate = makeBeforeDate(createdDate: action.createdDateTime)
+                let title = action.cardTitle
+//                let imageName =
+//                return ActionForView(beforeSectionMode: beforeSectionMode,
+//                                     afterSectionMode: afterSectionMode,
+//                                     title: title,
+//                                     actionType: actionType.actionTitle,
+//                                     beforeDate: beforeDate,
+//                                     imageName: "")
                 return ActionForView(contents: contents, beforeDate: beforeDate)
             }.compactMap({ $0 })
         return actions
@@ -104,6 +124,12 @@ extension CardsNetworkCenter {
         }
         return beforeDate
     }
+    
+//    private func imageName(type: ActionType) -> String {
+//        switch type {
+//        case .ADD: return
+//        }
+//    }
     
     private func makeActionContents(before: String, after: String, title: String, actionType: ActionType) -> String {
         var contents = ""

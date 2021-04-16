@@ -13,7 +13,7 @@ class PopupViewController: UIViewController, UITextFieldDelegate {
         case modify
     }
     
-    static let identifier = "AddView"
+    static let identifier = "PopupViewController"
     @IBOutlet weak private var subjectField: ObservingTextField!
     @IBOutlet weak private var bodyField: ObservingTextField!
     @IBOutlet weak private var writeButton: SubmitButton!
