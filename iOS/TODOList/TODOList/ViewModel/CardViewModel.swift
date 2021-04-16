@@ -42,7 +42,7 @@ class CardViewModel: CardInputViewModel {
         guard let title = subject.value else { return }
         guard let contents = body.value else { return }
         let cardForPost = CardForPost(title: title, contents: contents, columnType: mode.rawValue)
-        self.cardsNetworkCenter.postCards(cardForPost: cardForPost) { (cardResult) in
+        self.cardsNetworkCenter.postCard(cardForPost: cardForPost) { (cardResult) in
             switch cardResult {
             case .success(let card):
                 self.addCardHandler?(card)
@@ -60,7 +60,7 @@ class CardViewModel: CardInputViewModel {
         guard let title = subject.value else { return }
         guard let contents = body.value else { return }
         let cardForModify = CardForModify(title: title, contents: contents)
-        self.cardsNetworkCenter.modifyCards(cardForModify: cardForModify, id: id) { (result) in
+        self.cardsNetworkCenter.modifyCard(cardForModify: cardForModify, id: id) { (result) in
             switch result {
             case .success(let card):
                 self.modifyCardHandler?(card)

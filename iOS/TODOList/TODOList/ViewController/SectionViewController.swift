@@ -118,13 +118,15 @@ struct DragItem {
     var appearViewControll: CardOutputViewModel
     var indexPath: IndexPath
     var tableView: UITableView
+    var countHandler: (() -> ())?
 }
 
 extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         let provider = NSItemProvider()
         let item = UIDragItem(itemProvider: provider)
-        item.localObject = DragItem(appearViewControll: self.appearViewModel, indexPath: indexPath, tableView: tableView)
+        let countHandler: (() -> ())? = { self.setTODOCount() }
+        item.localObject = DragItem(appearViewControll: self.appearViewModel, indexPath: indexPath, tableView: tableView, countHandler: countHandler)
         return [item]
     }
     
@@ -144,12 +146,15 @@ extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegat
             let card = appearViewModel.cards[dragItem.indexPath.section]
             
             appearViewModel.removeCard(at: dragItem.indexPath.section)
-            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section)
+            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section + 1)
             
             self.TODOTableView.performBatchUpdates {
                 dragItem.tableView.deleteSections([dragItem.indexPath.section], with: .automatic)
-                tableView.insertSections([destinationIndexPath.section], with: .automatic)
+                tableView.insertSections([destinationIndexPath.section + 1], with: .automatic)
             }
+            
+            self.setTODOCount()
+            dragItem.countHandler?()
         default:
             return
         }

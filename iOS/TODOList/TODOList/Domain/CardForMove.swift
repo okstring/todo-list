@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct CardForMove {
+struct CardForMove: Codable {
     var cloumnId: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case columnId = "column_id"
-    }
 }

@@ -19,7 +19,7 @@ protocol CardOutputViewModel {
 
 class SectionViewModel: CardOutputViewModel {
     private(set) var cards: [Card]
-    private(set) var error: String // 임시추가
+    private(set) var error: String
     
     private var mode: SectionMode
     var getDataHandler: (() -> ())?
@@ -30,7 +30,10 @@ class SectionViewModel: CardOutputViewModel {
         self.cardsNetworkCenter = CardsNetworkCenter()
         self.error = ""
         self.cards = [Card]()
-        
+        self.requestCards()
+    }
+    
+    func requestCards() {
         cardsNetworkCenter.getCards { (kindOfCardsResult) in
             switch kindOfCardsResult {
             case .success(let kindOfCards):
@@ -41,7 +44,6 @@ class SectionViewModel: CardOutputViewModel {
                 self.error = error.localizedDescription
             }
         }
-        
     }
     
     func frontEnqueue(card: Card) {
