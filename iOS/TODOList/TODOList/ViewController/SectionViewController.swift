@@ -27,6 +27,7 @@ class SectionViewController: UIViewController {
         self.appearViewModel = SectionViewModel(mode: sectionMode)
         self.changeCardViewModel = CardViewModel()
         self.sectionViewDataSource.setAppearViewModel(of: self.appearViewModel)
+        self.sectionViewDelegate.setAppearViewModel(of: self.appearViewModel)
         self.initHTTPMethodHandler()
         self.setTitleText()
         self.setTODOCount()
@@ -62,7 +63,11 @@ class SectionViewController: UIViewController {
         self.sectionViewDataSource.deleteCard = { indexPath, card in
             self.appearViewModel.removeCard(at: indexPath.section)
             self.changeCardViewModel.deleteCard(card: card)
-            
+        }
+        
+        self.sectionViewDelegate.deleteCardwithContextMenu = { indexPath, card in
+            self.appearViewModel.removeCard(at: indexPath.section)
+            self.changeCardViewModel.deleteCard(card: card)
         }
         
         self.sectionViewDelegate.presentModifyVieControllerHandler = { index in
