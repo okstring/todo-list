@@ -20,22 +20,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="332" height="137"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="~~~를 ~~~일에서 ~~~일로 이동했습니다. 높이가 제대로 먹히는지 확인하기 위해서 글을 많이많이 써보도록 해보겠습니다." textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DrY-fN-z9a">
-                                <rect key="frame" x="64" y="44" width="252" height="53"/>
+                                <rect key="frame" x="56" y="44" width="276" height="53"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="note.text" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="HKU-pr-kYY">
-                                <rect key="frame" x="16" y="17" width="40" height="37.5"/>
-                                <color key="tintColor" systemColor="systemPinkColor"/>
+                                <rect key="frame" x="0.0" y="49.5" width="40" height="37.5"/>
+                                <color key="tintColor" red="0.0" green="0.45882352941176469" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="2tP-n0-oRe"/>
                                     <constraint firstAttribute="height" constant="40" id="3mF-Vt-UHV"/>
                                     <constraint firstAttribute="width" constant="40" id="JWs-ZA-REF"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Kim" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhD-hW-F6a">
-                                <rect key="frame" x="64" y="16" width="252" height="20"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Leonardo Dicaprio" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhD-hW-F6a">
+                                <rect key="frame" x="56" y="16" width="276" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="lLP-mv-tag"/>
                                 </constraints>
@@ -44,7 +44,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="1분 전" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BcD-CC-wdG">
-                                <rect key="frame" x="64" y="105" width="252" height="17"/>
+                                <rect key="frame" x="56" y="105" width="276" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
@@ -53,16 +53,16 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="DrY-fN-z9a" firstAttribute="leading" secondItem="ZhD-hW-F6a" secondAttribute="leading" id="0FU-gO-1Oi"/>
+                            <constraint firstItem="ZhD-hW-F6a" firstAttribute="top" secondItem="UaL-UN-Lgo" secondAttribute="top" constant="16" id="1tr-1c-zOm"/>
                             <constraint firstAttribute="bottom" secondItem="DrY-fN-z9a" secondAttribute="bottom" constant="40" id="7Re-z7-owg"/>
                             <constraint firstItem="DrY-fN-z9a" firstAttribute="trailing" secondItem="ZhD-hW-F6a" secondAttribute="trailing" id="C9Q-E6-BVV"/>
                             <constraint firstAttribute="width" constant="332" id="JLY-jB-Bo4"/>
-                            <constraint firstAttribute="trailing" secondItem="ZhD-hW-F6a" secondAttribute="trailing" constant="16" id="JP8-Pq-lZG"/>
-                            <constraint firstItem="ZhD-hW-F6a" firstAttribute="leading" secondItem="HKU-pr-kYY" secondAttribute="trailing" constant="8" symbolic="YES" id="Lt3-Se-XNS"/>
+                            <constraint firstAttribute="trailing" secondItem="ZhD-hW-F6a" secondAttribute="trailing" id="JP8-Pq-lZG"/>
+                            <constraint firstItem="ZhD-hW-F6a" firstAttribute="leading" secondItem="HKU-pr-kYY" secondAttribute="trailing" constant="16" id="Lt3-Se-XNS"/>
                             <constraint firstItem="BcD-CC-wdG" firstAttribute="top" secondItem="DrY-fN-z9a" secondAttribute="bottom" constant="8" id="M59-8C-q5F"/>
-                            <constraint firstItem="ZhD-hW-F6a" firstAttribute="top" secondItem="HKU-pr-kYY" secondAttribute="top" id="OpK-DH-6gB"/>
-                            <constraint firstItem="HKU-pr-kYY" firstAttribute="top" secondItem="UaL-UN-Lgo" secondAttribute="top" constant="16" id="S37-Pj-pAP"/>
+                            <constraint firstItem="HKU-pr-kYY" firstAttribute="centerY" secondItem="UaL-UN-Lgo" secondAttribute="centerY" id="dKI-Hs-jn5"/>
                             <constraint firstItem="BcD-CC-wdG" firstAttribute="trailing" secondItem="ZhD-hW-F6a" secondAttribute="trailing" id="f2i-a8-QCs"/>
-                            <constraint firstItem="HKU-pr-kYY" firstAttribute="leading" secondItem="UaL-UN-Lgo" secondAttribute="leading" constant="16" id="n4c-pn-EnT"/>
+                            <constraint firstItem="HKU-pr-kYY" firstAttribute="leading" secondItem="UaL-UN-Lgo" secondAttribute="leading" id="n4c-pn-EnT"/>
                             <constraint firstItem="DrY-fN-z9a" firstAttribute="top" secondItem="ZhD-hW-F6a" secondAttribute="bottom" constant="8" id="nkQ-ua-bhp"/>
                             <constraint firstItem="BcD-CC-wdG" firstAttribute="leading" secondItem="ZhD-hW-F6a" secondAttribute="leading" id="ypc-xe-4Rs"/>
                         </constraints>
@@ -93,9 +93,6 @@
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
