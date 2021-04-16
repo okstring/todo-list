@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    @objc func tappedBackGround() {
+    @objc func tappedBackground() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
             self.menuView.frame.origin.x = self.view.frame.maxX + 20
         }
@@ -111,7 +111,7 @@ class MainViewController: UIViewController {
     
     func settingRecognitionWhenBackgroundTouched() {
         self.backgroundView.becomeFirstResponder()
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedBackGround))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedBackground))
         self.backgroundView.addGestureRecognizer(tapRecognizer)
     }
 }

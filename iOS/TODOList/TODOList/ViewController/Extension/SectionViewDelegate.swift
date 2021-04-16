@@ -41,7 +41,7 @@ extension SectionViewDelegate: UITableViewDelegate {
                                             let deleteAction =
                                                 UIAction(title: NSLocalizedString("삭제하기", comment: ""),
                                                          attributes: .destructive) { action in
-                                                    let card = self.appearViewModel.cards[indexPath.row]
+                                                    let card = self.appearViewModel.cards[indexPath.section]
                                                     self.deleteCardwithContextMenu?(indexPath, card)
                                                     DispatchQueue.main.async {
                                                         tableView.reloadData()
