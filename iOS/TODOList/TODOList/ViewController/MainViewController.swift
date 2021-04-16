@@ -96,7 +96,6 @@ class MainViewController: UIViewController {
         self.closeButton.tintColor = .black
         self.closeButton.setImage(largeBold, for: .normal)
         self.closeButton.addTarget(self, action: #selector(closeMenuView), for: .touchUpInside)
-        
         self.menuView.addSubview(self.closeButton)
     }
 }

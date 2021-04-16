@@ -97,7 +97,7 @@ extension CardsNetworkCenter {
             beforeDate = "\(subDate)초 전"
         } else if subDate / 60 < 60 {
             beforeDate = "\(subDate / 60)분 전"
-        } else if subDate / 3600 < 60 {
+        } else if subDate / 3600 < 24 {
             beforeDate = "\(subDate / 3600)시간 전"
         } else {
             beforeDate = "\(subDate / 86400)일 전"
@@ -109,9 +109,9 @@ extension CardsNetworkCenter {
         var contents = ""
         switch actionType {
         case .MOVE:
-            contents = "\(title)을 \(before)에서 \(after)로 이동하였습니다."
+            contents = "\(title)을 \(before)에서 \(after)로 \(actionType.actionTitle)하였습니다."
         default:
-            contents = "\(after)에 \(title)을 등록하였습니다."
+            contents = "\(after)에 \(title)을 \(actionType.actionTitle)하였습니다."
         }
         return contents
     }
