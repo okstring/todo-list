@@ -9,6 +9,12 @@ import UIKit
 
 class SectionViewDelegate: NSObject {
     var presentModifyVieControllerHandler: ((Int) -> ())?
+    var deleteCardwithContextMenu: ((IndexPath, Card) -> ())?
+        var appearViewModel: CardOutputViewModel!
+        
+        func setAppearViewModel(of viewModel: CardOutputViewModel) {
+            self.appearViewModel = viewModel
+        }
 }
 
 extension SectionViewDelegate: UITableViewDelegate {
@@ -35,6 +41,11 @@ extension SectionViewDelegate: UITableViewDelegate {
                                             let deleteAction =
                                                 UIAction(title: NSLocalizedString("삭제하기", comment: ""),
                                                          attributes: .destructive) { action in
+                                                    let card = self.appearViewModel.cards[indexPath.row]
+                                                    self.deleteCardwithContextMenu?(indexPath, card)
+                                                    DispatchQueue.main.async {
+                                                        tableView.reloadData()
+                                                    }
                                                 }
                                             return UIMenu(title: "", children: [inspectAction, duplicateAction, deleteAction])
                                           })
