@@ -8,6 +8,10 @@
 import Foundation
 
 struct ActionForView {
-    var contents: String
+    var beforeSectionMode: String
+    var afterSectionMode: String
+    var title: String
+    var actionType: String
     var beforeDate: String
+    var imageName: String
 }

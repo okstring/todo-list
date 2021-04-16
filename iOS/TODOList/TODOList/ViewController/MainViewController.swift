@@ -107,9 +107,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as? HistoryCell else { return HistoryCell() }
-        let actions = self.menuViewModel.actions
-        cell.contents.text = actions[indexPath.row].contents
-        cell.time.text = actions[indexPath.row].beforeDate
+        let action = self.menuViewModel.actions[indexPath.row]
+        let attributedContents = makeAttributedText(of: action)
+        cell.contents.attributedText = attributedContents
+        cell.time.text = action.beforeDate
+        cell.stateImageView.image = UIImage(systemName: action.imageName)
         cell.contents.sizeToFit()
         return cell
     }
@@ -124,5 +126,41 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 500
+    }
+}
+
+
+extension MainViewController {
+    func makeAttributedText(of action: ActionForView) -> NSMutableAttributedString {
+        let attr = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17)]
+        let attrBeforeColumns = NSMutableAttributedString(string: action.beforeSectionMode, attributes: attr)
+        let attrAfterColumns = NSMutableAttributedString(string: action.afterSectionMode, attributes: attr)
+        let attrTitle = NSMutableAttributedString(string: action.title, attributes: attr)
+        let attrActionType = NSMutableAttributedString(string: action.actionType, attributes: attr)
+        let attrAt = NSMutableAttributedString(string: "를(을) ")
+        let attrFrom = NSMutableAttributedString(string: "에서 ")
+        let attrWith = NSMutableAttributedString(string: "로 ")
+        let attrTo = NSMutableAttributedString(string: "에 ")
+        let attrDone = NSMutableAttributedString(string: "하였습니다.")
+        let contents = NSMutableAttributedString(string: "")
+        switch action.actionType {
+        case "이동":
+            contents.append(attrTitle)
+            contents.append(attrAt)
+            contents.append(attrBeforeColumns)
+            contents.append(attrFrom)
+            contents.append(attrAfterColumns)
+            contents.append(attrWith)
+            contents.append(attrActionType)
+            contents.append(attrDone)
+        default:
+            contents.append(attrAfterColumns)
+            contents.append(attrTo)
+            contents.append(attrTitle)
+            contents.append(attrAt)
+            contents.append(attrActionType)
+            contents.append(attrDone)
+        }
+        return contents
     }
 }

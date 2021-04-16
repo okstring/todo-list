@@ -25,7 +25,7 @@ class CardsNetworkCenter: NetworkingCards {
     }
     
     func getCards(action: @escaping (Result<KindOfCards, NetworkError>) -> Void) {
-        let url = "http://13.124.169.220:8080/api/cards/show"
+        let url = "http://3.36.119.210:8080/api/cards/show"
         self.networking.getToDoList(url: url) { (cardsResult) in
             switch cardsResult {
             case .success(let cards):
@@ -38,7 +38,7 @@ class CardsNetworkCenter: NetworkingCards {
     }
     
     func postCard(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void) {
-        let url = "http://13.124.169.220:8080/api/cards/create"
+        let url = "http://3.36.119.210:8080/api/cards/create"
         self.networking.postToDoList(url: url, card: cardForPost) { (cardResult) in
             switch cardResult {
             case .success(let card):
@@ -50,12 +50,12 @@ class CardsNetworkCenter: NetworkingCards {
     }
     
     func getAction(action: @escaping (Result<[ActionForView], NetworkError>) -> Void) {
-        let url = "http://13.124.169.220:8080/api/actions/show"
+        let url = "http://3.36.119.210:8080/api/actions/show"
         self.networking.getHistory(url: url) { (actionResult) in
             switch actionResult {
             case .success(let actions):
-                let allStatus = self.manufactureActions(rowActions: actions)
-                action(.success(allStatus))
+                let actionForView = self.manufactureActions(rowActions: actions)
+                action(.success(actionForView))
             case .failure(let error):
                 action(.failure(error))
             }
@@ -63,7 +63,7 @@ class CardsNetworkCenter: NetworkingCards {
     }
     
     func modifyCard(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void) {
-        let url = "http://13.124.169.220:8080/api/cards/\(id)/update"
+        let url = "http://3.36.119.210:8080/api/cards/\(id)/update"
         self.networking.modifyToDoList(url: url, card: cardForModify, completionHandler: { (cardResult) in
             switch cardResult {
             case .success(let card):
@@ -75,7 +75,7 @@ class CardsNetworkCenter: NetworkingCards {
     }
     
     func moveCard(cardForMove: CardForMove, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void) {
-        let url = "http://13.124.169.220:8080/api/cards/\(id)/move"
+        let url = "http://3.36.119.210:8080/api/cards/\(id)/move"
         self.networking.moveToDoList(url: url, card: cardForMove, completionHandler: { (cardResult) in
             switch cardResult {
             case .success(let card):
@@ -88,7 +88,7 @@ class CardsNetworkCenter: NetworkingCards {
     
     func deleteCards(card: Card) {
             let id = card.id
-            let url = "http://13.124.169.220:8080/api/cards/\(id)/delete"
+            let url = "http://3.36.119.210:8080/api/cards/\(id)/delete"
             self.networking.deleteToDoList(url: url)
             
         }
@@ -103,17 +103,22 @@ extension CardsNetworkCenter {
                 guard let beforeSectionMode = SectionMode(rawValue: action.columnFrom)?.sectionTitle else { return nil }
                 guard let afterSectionMode = SectionMode(rawValue: action.columnTo)?.sectionTitle else { return nil }
                 guard let actionType = ActionType(rawValue: action.actionType) else { return nil }
-                let contents = makeActionContents(before: beforeSectionMode, after: afterSectionMode, title: action.cardTitle, actionType: actionType)
                 let beforeDate = makeBeforeDate(createdDate: action.createdDateTime)
                 let title = action.cardTitle
-//                let imageName =
-//                return ActionForView(beforeSectionMode: beforeSectionMode,
-//                                     afterSectionMode: afterSectionMode,
-//                                     title: title,
-//                                     actionType: actionType.actionTitle,
-//                                     beforeDate: beforeDate,
-//                                     imageName: "")
-                return ActionForView(contents: contents, beforeDate: beforeDate)
+                var imageName: String {
+                    switch actionType {
+                    case .ADD: return "plus.bubble.fill"
+                    case .DELETE: return "delete.left.fill"
+                    case .MOVE: return "arrowshape.turn.up.right.fill"
+                    case .UPDATE: return "note.text"
+                    }
+                }
+                return ActionForView(beforeSectionMode: beforeSectionMode,
+                                     afterSectionMode: afterSectionMode,
+                                     title: title,
+                                     actionType: actionType.actionTitle,
+                                     beforeDate: beforeDate,
+                                     imageName: imageName)
             }.compactMap({ $0 })
         return actions
     }
@@ -132,12 +137,6 @@ extension CardsNetworkCenter {
         }
         return beforeDate
     }
-    
-//    private func imageName(type: ActionType) -> String {
-//        switch type {
-//        case .ADD: return
-//        }
-//    }
     
     private func makeActionContents(before: String, after: String, title: String, actionType: ActionType) -> String {
         var contents = ""
