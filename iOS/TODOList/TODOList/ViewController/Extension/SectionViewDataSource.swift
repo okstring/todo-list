@@ -8,7 +8,7 @@
 import UIKit
 
 class SectionViewDataSource: NSObject {
-    var deleteCard: ((Card) -> ())?
+    var deleteCard: ((IndexPath, Card) -> ())?
     var appearViewModel: CardOutputViewModel!
     
     func setAppearViewModel(of viewModel: CardOutputViewModel) {
@@ -39,8 +39,11 @@ extension SectionViewDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let cards = self.appearViewModel.cards
-            deleteCard?(cards[indexPath.row])
+            let card = self.appearViewModel.cards[indexPath.row]
+            deleteCard?(indexPath, card)
+            DispatchQueue.main.async {
+                tableView.reloadData()
+            }
         }
     }
 }

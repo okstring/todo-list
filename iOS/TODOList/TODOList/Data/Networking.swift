@@ -21,6 +21,7 @@ protocol Networkable {
     func getHistory(url: String, completionHandler: @escaping (Result<[Action], NetworkError>) -> Void)
     func modifyToDoList(url: String, card: CardForModify, completionHandler: @escaping (Result<Card, NetworkError>) -> Void)
     func moveToDoList(url: String, card: CardForMove, completionHandler: @escaping (Result<Card, NetworkError>) -> Void)
+    func deleteToDoList(url: String)
 }
 
 class Networking: Networkable {
@@ -180,5 +181,17 @@ class Networking: Networkable {
         }
     }
     
-    
+    func deleteToDoList(url: String) {
+        guard let url = URL(string: url) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "Delete"
+        SessionManger.request(urlRequest: request) { (sessionResult) in
+            switch sessionResult {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(_):
+                break
+            }
+        }
+    }
 }

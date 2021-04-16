@@ -12,6 +12,7 @@ protocol NetworkingCards {
     func postCard(cardForPost: CardForPost, action: @escaping (Result<Card, NetworkError>) -> Void)
     func getAction(action: @escaping (Result<[ActionForView], NetworkError>) -> Void)
     func modifyCard(cardForModify: CardForModify, id: Int,  action: @escaping (Result<Card, NetworkError>) -> Void)
+    func deleteCards(card: Card)
 }
 
 class CardsNetworkCenter: NetworkingCards {
@@ -84,6 +85,13 @@ class CardsNetworkCenter: NetworkingCards {
             }
         })
     }
+    
+    func deleteCards(card: Card) {
+            let id = card.id
+            let url = "http://13.124.169.220:8080/api/cards/\(id)/delete"
+            self.networking.deleteToDoList(url: url)
+            
+        }
     
 }
 

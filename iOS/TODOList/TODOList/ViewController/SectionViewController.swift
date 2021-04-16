@@ -59,8 +59,10 @@ class SectionViewController: UIViewController {
             }
         }
         
-        self.sectionViewDataSource.deleteCard = { card in
+        self.sectionViewDataSource.deleteCard = { indexPath, card in
+            self.appearViewModel.removeCard(at: indexPath.section)
             self.changeCardViewModel.deleteCard(card: card)
+            
         }
         
         self.sectionViewDelegate.presentModifyVieControllerHandler = { index in
