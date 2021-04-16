@@ -142,7 +142,7 @@ extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegat
         case .move:
             let destinationIndexPath: IndexPath
             
-            let section = coordinator.destinationIndexPath!.section
+            guard let section = coordinator.destinationIndexPath?.section else { return }
             
             destinationIndexPath = IndexPath(row: 0, section: section)
             
@@ -153,11 +153,11 @@ extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegat
             let card = appearViewModel.cards[dragItem.indexPath.section]
             
             appearViewModel.removeCard(at: dragItem.indexPath.section)
-            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section + 1)
+            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section)
             
             self.TODOTableView.performBatchUpdates {
-                dragItem.tableView.deleteSections([dragItem.indexPath.section], with: .automatic)
-                tableView.insertSections([destinationIndexPath.section + 1], with: .automatic)
+                dragItem.tableView.deleteSections([dragItem.indexPath.section], with: .fade)
+                tableView.insertSections([destinationIndexPath.section], with: .fade)
             }
             
             self.setTODOCount()
