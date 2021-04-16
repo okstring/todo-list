@@ -168,11 +168,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="258" height="124"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Te-Tz-SQk">
-                                                    <rect key="frame" x="16" y="8" width="226" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="CE0-EI-bvb"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" text="Subject" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Te-Tz-SQk">
+                                                    <rect key="frame" x="16" y="8" width="226" height="56.5"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -186,8 +183,8 @@
                                                     <color key="textColor" systemColor="systemGray4Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" text="Body" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOZ-7u-MeX">
-                                                    <rect key="frame" x="16" y="36" width="226" height="57"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" text="Body" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vOZ-7u-MeX">
+                                                    <rect key="frame" x="16" y="72.5" width="226" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -211,18 +208,6 @@
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="10"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColor">
-                                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
-                                                <integer key="value" value="12"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
-                                                <real key="value" value="0.69999999999999996"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -344,6 +329,8 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Lfj-oR-65E" secondAttribute="bottom" constant="78.5" id="15f-h6-GXW"/>
                                     <constraint firstItem="Lfj-oR-65E" firstAttribute="width" secondItem="Lfz-pK-mS0" secondAttribute="width" id="3EV-IB-kAc"/>
+                                    <constraint firstAttribute="trailing" secondItem="cIl-sK-cW7" secondAttribute="trailing" constant="16" id="6sZ-Nt-UO6"/>
+                                    <constraint firstItem="cIl-sK-cW7" firstAttribute="leading" secondItem="K6Y-z2-w8f" secondAttribute="leading" constant="160" id="BD0-uH-UB4"/>
                                     <constraint firstItem="cIl-sK-cW7" firstAttribute="trailing" secondItem="Lfj-oR-65E" secondAttribute="trailing" id="Fwb-rc-OnW"/>
                                     <constraint firstAttribute="height" constant="175" id="O19-fX-Zef"/>
                                     <constraint firstItem="96r-Hy-xC3" firstAttribute="width" secondItem="Lfz-pK-mS0" secondAttribute="width" id="Rtc-oG-W66"/>

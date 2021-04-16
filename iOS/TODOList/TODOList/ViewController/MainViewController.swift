@@ -37,7 +37,7 @@ class MainViewController: UIViewController {
     
     @objc func tappedBackGround() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
-            self.menuView.frame.origin.x = self.view.frame.maxX
+            self.menuView.frame.origin.x = self.view.frame.maxX + 20
         }
     }
 
@@ -63,7 +63,7 @@ class MainViewController: UIViewController {
     
     @objc func closeMenuView() {
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseInOut) {
-            self.menuView.frame.origin.x = self.view.frame.maxX
+            self.menuView.frame.origin.x = self.view.frame.maxX + 20
         }
     }
     
@@ -72,7 +72,10 @@ class MainViewController: UIViewController {
         self.menuView.backgroundColor = .white
         self.menuView.frame.size.width = self.view.frame.width * 0.35
         self.menuView.frame.size.height = self.view.frame.height
-        self.menuView.frame.origin.x = self.view.frame.maxX
+        self.menuView.frame.origin.x = self.view.frame.maxX + 20
+        self.menuView.layer.shadowColor = UIColor.gray.cgColor
+        self.menuView.layer.shadowRadius = 10
+        self.menuView.layer.shadowOpacity = 0.9
         self.view.addSubview(self.menuView)
     }
     
@@ -134,7 +137,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 130
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
