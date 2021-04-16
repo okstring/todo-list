@@ -10,7 +10,7 @@ import UIKit
 class SectionViewController: UIViewController {
     static let storyboardID = "sectionViewController"
     
-    @IBOutlet weak private var TODOTableView: UITableView!
+    @IBOutlet weak private(set) var TODOTableView: UITableView!
     @IBOutlet private var sectionViewDataSource: SectionViewDataSource!
     @IBOutlet private var sectionViewDelegate: SectionViewDelegate!
     @IBOutlet weak private var sectionTitle: UILabel!
@@ -142,26 +142,25 @@ extension SectionViewController: UITableViewDragDelegate, UITableViewDropDelegat
         case .move:
             let destinationIndexPath: IndexPath
             
-            guard let section = coordinator.destinationIndexPath?.section else { return }
-            
-            destinationIndexPath = IndexPath(row: 0, section: section)
-            
-            let item = coordinator.items.first!
-            let dragItem = item.dragItem.localObject as! DragItem
-            let appearViewModel = dragItem.appearViewControll
-            
-            let card = appearViewModel.cards[dragItem.indexPath.section]
-            
-            appearViewModel.removeCard(at: dragItem.indexPath.section)
-            self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section)
-            
-            self.TODOTableView.performBatchUpdates {
-                dragItem.tableView.deleteSections([dragItem.indexPath.section], with: .fade)
-                tableView.insertSections([destinationIndexPath.section], with: .fade)
+            if let section = coordinator.destinationIndexPath?.section {
+                destinationIndexPath = IndexPath(row: 0, section: section)
+                
+                let item = coordinator.items.first!
+                let dragItem = item.dragItem.localObject as! DragItem
+                let appearViewModel = dragItem.appearViewControll
+                
+                let card = appearViewModel.cards[dragItem.indexPath.section]
+                
+                appearViewModel.removeCard(at: dragItem.indexPath.section)
+                self.appearViewModel.insertCard(of: card, at: destinationIndexPath.section)
+                
+                self.TODOTableView.performBatchUpdates {
+                    dragItem.tableView.deleteSections([dragItem.indexPath.section], with: .fade)
+                    tableView.insertSections([destinationIndexPath.section], with: .fade)
+                }
+                self.setTODOCount()
+                dragItem.countHandler?()
             }
-            
-            self.setTODOCount()
-            dragItem.countHandler?()
         default:
             return
         }
